@@ -10,13 +10,23 @@ if find_spec("fastapi") is None:
         def __init__(self, *args, **kwargs):
             pass
 
-        def post(self, *args, **kwargs):
+        def _route(self, *args, **kwargs):
             def decorator(func):
                 return func
 
             return decorator
 
+        post = _route
+        get = _route
+        put = _route
+
+    class _FakeHTTPException(Exception):
+        def __init__(self, status_code, detail):
+            self.status_code = status_code
+            self.detail = detail
+
     fastapi_stub.FastAPI = _FakeFastAPI
+    fastapi_stub.HTTPException = _FakeHTTPException
     sys.modules["fastapi"] = fastapi_stub
 
 from src.main import triage
