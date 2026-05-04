@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Literal, Optional
 
 from pydantic import BaseModel
 
@@ -9,10 +9,10 @@ Confidence = Literal["low", "medium", "high"]
 
 class PetProfile(BaseModel):
     species: str
-    breed: str | None = None
-    age: float | None = None
-    sex: str | None = None
-    weight: float | None = None
+    breed: Optional[str] = None
+    age: Optional[float] = None
+    sex: Optional[str] = None
+    weight: Optional[float] = None
     known_conditions: list[str] = []
 
 
@@ -26,7 +26,7 @@ class ModuleResult(BaseModel):
     source: str
     reasoning: str
     confidence: Confidence
-    clarifying_question: str | None = None
+    clarifying_question: Optional[str] = None
     triggered_rules: list[str] = []
 
 
@@ -34,5 +34,5 @@ class TriageResponse(BaseModel):
     final_urgency: Urgency
     decision_source: str
     reasoning: str
-    rule_result: ModuleResult | None = None
-    llm_result: ModuleResult | None = None
+    rule_result: Optional[ModuleResult] = None
+    llm_result: Optional[ModuleResult] = None
