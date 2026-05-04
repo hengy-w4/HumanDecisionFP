@@ -3,4 +3,4 @@ uvicorn
 pydantic
 pytest
 python-dotenv
-openai
+openai>=1.0.0,<2.0.0
