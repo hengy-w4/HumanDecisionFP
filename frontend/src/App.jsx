@@ -1,5 +1,6 @@
 import { useState } from "react";
 import HomePage from "./pages/HomePage/HomePage.jsx";
+import PetProfilePage from "./pages/PetProfilePage/PetProfilePage.jsx";
 import SymptomChatPage from "./pages/SymptomChatPage/SymptomChatPage.jsx";
 
 export default function App() {
@@ -9,5 +10,14 @@ export default function App() {
     return <SymptomChatPage onNavigateHome={() => setPage("home")} />;
   }
 
-  return <HomePage onNavigateChat={() => setPage("chat")} />;
+  if (page === "profile") {
+    return <PetProfilePage onNavigateHome={() => setPage("home")} />;
+  }
+
+  return (
+    <HomePage
+      onNavigateChat={() => setPage("chat")}
+      onNavigateProfile={() => setPage("profile")}
+    />
+  );
 }

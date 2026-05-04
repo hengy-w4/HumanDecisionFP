@@ -6,10 +6,14 @@ import "./homePage.css";
 
 const navItems = ["Chatbot", "Profile", "Feedback"];
 
-export default function HomePage({ onNavigateChat }) {
+export default function HomePage({ onNavigateChat, onNavigateProfile }) {
   const handleNavClick = (item) => {
     if (item === "Chatbot") {
       onNavigateChat();
+    }
+
+    if (item === "Profile") {
+      onNavigateProfile();
     }
   };
 
