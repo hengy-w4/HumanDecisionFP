@@ -10,11 +10,14 @@ if find_spec("fastapi") is None:
         def __init__(self, *args, **kwargs):
             pass
 
-        def post(self, *args, **kwargs):
+        def _route(self, *args, **kwargs):
             def decorator(func):
                 return func
 
             return decorator
+
+        post = _route
+        get = _route
 
     fastapi_stub.FastAPI = _FakeFastAPI
     sys.modules["fastapi"] = fastapi_stub
