@@ -10,26 +10,14 @@ _RED_FLAGS: list[dict] = json.loads(
 _MALE_TOKENS = {"male", "m", "intact male", "neutered male", "unneutered male"}
 
 
-def _species_matches(rule_species: str, profile: PetProfile) -> bool:
+def _species_matches(rule_species: str, rule_sex: str, profile: PetProfile) -> bool:
     s = profile.species.lower()
     sex = (profile.sex or "").lower().strip()
-    match rule_species:
-        case "both":
-            return True
-        case "cat":
-            return s == "cat"
-        case "dog":
-            return s == "dog"
-        case "cat_male":
-            return s == "cat" and sex in _MALE_TOKENS
-        case "dog_male":
-            return s == "dog" and sex in _MALE_TOKENS
-        case "dog_large":
-            return s == "dog" and (profile.weight or 0) >= 25
-        case "neonatal":
-            return (profile.age or 999) < 0.5
-        case _:
-            return False
+    if rule_species != "any" and rule_species != s:
+        return False
+    if rule_sex == "male" and sex not in _MALE_TOKENS:
+        return False
+    return True
 
 
 def _first_matching_keyword(keywords: list[str], text: str) -> str | None:
@@ -41,7 +29,7 @@ def run_rule_engine(pet_profile: PetProfile, symptom_text: str) -> ModuleResult:
     triggered: list[str] = []
 
     for rule in _RED_FLAGS:
-        if not _species_matches(rule["species"], pet_profile):
+        if not _species_matches(rule["species"], rule["sex"], pet_profile):
             continue
         hit = _first_matching_keyword(rule["keywords"], symptom_text)
         if hit:
