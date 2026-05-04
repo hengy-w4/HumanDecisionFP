@@ -6,7 +6,13 @@ import "./homePage.css";
 
 const navItems = ["Chatbot", "Profile", "Feedback"];
 
-export default function HomePage() {
+export default function HomePage({ onNavigateChat }) {
+  const handleNavClick = (item) => {
+    if (item === "Chatbot") {
+      onNavigateChat();
+    }
+  };
+
   return (
     <main className="home-page">
       <header className="home-header">
@@ -21,7 +27,12 @@ export default function HomePage() {
 
         <nav className="home-nav" aria-label="Dashboard navigation">
           {navItems.map((item) => (
-            <button className="nav-button" type="button" key={item}>
+            <button
+              className="nav-button"
+              type="button"
+              key={item}
+              onClick={() => handleNavClick(item)}
+            >
               {item}
             </button>
           ))}
@@ -37,7 +48,7 @@ export default function HomePage() {
             reasoning, red flags, and recommended next steps.
           </p>
         </div>
-        <button className="primary-button" type="button">
+        <button className="primary-button" type="button" onClick={onNavigateChat}>
           Start New Symptom Check
         </button>
       </section>

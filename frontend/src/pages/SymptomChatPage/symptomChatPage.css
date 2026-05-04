@@ -1,0 +1,268 @@
+.symptom-chat-page {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0 48px;
+}
+
+.chat-header {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.chat-header h1 {
+  max-width: 780px;
+  margin: 0;
+  color: #172b2a;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.05;
+}
+
+.chat-header p:not(.eyebrow) {
+  max-width: 690px;
+  margin: 14px 0 0;
+  color: #526261;
+  line-height: 1.6;
+}
+
+.back-button {
+  width: max-content;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid #d8e5e2;
+  background: #ffffff;
+  color: #244746;
+}
+
+.back-button:hover {
+  border-color: #91bdb5;
+  color: #0c5e58;
+}
+
+.chat-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 420px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.chat-panel,
+.chat-response {
+  border: 1px solid #dce7e4;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 18px 44px rgba(29, 54, 52, 0.08);
+}
+
+.chat-panel {
+  padding: 22px;
+}
+
+.chat-panel__heading h2,
+.chat-response h2 {
+  margin: 0;
+  color: #172b2a;
+}
+
+.symptom-input {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.symptom-input label {
+  color: #244746;
+  font-weight: 800;
+}
+
+.symptom-input textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 180px;
+  padding: 14px;
+  border: 1px solid #cadbd8;
+  border-radius: 8px;
+  color: #172b2a;
+  font: inherit;
+  line-height: 1.5;
+  background: #fbfcfc;
+}
+
+.symptom-input textarea:focus {
+  outline: 3px solid rgba(15, 118, 110, 0.16);
+  border-color: #0f766e;
+}
+
+.symptom-input button:disabled {
+  cursor: not-allowed;
+  opacity: 0.68;
+}
+
+.input-error {
+  margin: 12px 0 0;
+  color: #9f2d22;
+  font-weight: 700;
+}
+
+.disclaimer {
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #fff7e8;
+  color: #6f521b;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.chat-response {
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+}
+
+.chat-response--empty {
+  min-height: 360px;
+  align-content: center;
+}
+
+.chat-response--empty p:not(.eyebrow) {
+  max-width: 520px;
+  margin: 8px 0 0;
+  color: #526261;
+  line-height: 1.6;
+}
+
+.chat-response__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.chat-response__header span {
+  color: #71807e;
+  font-size: 0.86rem;
+  white-space: nowrap;
+}
+
+.urgency-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(150px, auto);
+  gap: 16px;
+  align-items: center;
+  padding: 18px;
+  border-radius: 8px;
+  border: 1px solid;
+}
+
+.urgency-card h2 {
+  font-size: 2rem;
+}
+
+.urgency-card p {
+  grid-column: 1 / -1;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.urgency-card__confidence {
+  justify-self: end;
+  display: grid;
+  gap: 4px;
+  min-width: 126px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.66);
+}
+
+.urgency-card__confidence span {
+  color: #5f6e6c;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.urgency-card__confidence strong {
+  color: #172b2a;
+  font-size: 1.35rem;
+}
+
+.urgency-card--emergency {
+  background: #fde2df;
+  border-color: #f4b0aa;
+  color: #6f1f18;
+}
+
+.urgency-card--urgent {
+  background: #ffe9bf;
+  border-color: #f4ca7c;
+  color: #6b4300;
+}
+
+.urgency-card--monitor {
+  background: #dff4e7;
+  border-color: #a9d9bb;
+  color: #1d5332;
+}
+
+.response-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.response-grid section {
+  min-height: 150px;
+  padding: 16px;
+  border: 1px solid #e5ecea;
+  border-radius: 8px;
+  background: #fbfcfc;
+}
+
+.response-grid h3 {
+  margin: 0 0 8px;
+  color: #1d3634;
+  font-size: 1rem;
+}
+
+.response-grid p,
+.response-grid ul {
+  margin: 0;
+  color: #5f6e6c;
+  line-height: 1.5;
+}
+
+.response-grid ul {
+  padding-left: 20px;
+}
+
+@media (max-width: 900px) {
+  .chat-layout,
+  .response-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 540px) {
+  .symptom-chat-page {
+    width: min(100% - 24px, 1120px);
+    padding-top: 24px;
+  }
+
+  .chat-panel,
+  .chat-response {
+    padding: 18px;
+  }
+
+  .chat-response__header,
+  .urgency-card {
+    grid-template-columns: 1fr;
+  }
+
+  .chat-response__header {
+    display: grid;
+  }
+
+  .urgency-card__confidence {
+    justify-self: stretch;
+  }
+}
