@@ -1,0 +1,322 @@
+[
+  {
+    "case_id": "NORMAL_01",
+    "is_adversarial": false,
+    "pet_profile": {
+      "species": "dog",
+      "breed": "Labrador Retriever",
+      "age": 4.0,
+      "sex": "female",
+      "weight": 28.0,
+      "known_conditions": []
+    },
+    "symptom_text": "Bella had one soft stool this morning but she's been totally normal since—eating, playing, drinking. She's acting like herself.",
+    "ground_truth_urgency": "monitor_at_home",
+    "expected_catch_layer": "llm",
+    "notes": "Single episode of soft stool with normal mentation and appetite. Self-limiting in the vast majority of cases."
+  },
+  {
+    "case_id": "NORMAL_02",
+    "is_adversarial": false,
+    "pet_profile": {
+      "species": "cat",
+      "breed": "Domestic Shorthair",
+      "age": 3.0,
+      "sex": "female",
+      "weight": 4.2,
+      "known_conditions": []
+    },
+    "symptom_text": "Luna sneezed maybe 4 or 5 times today. She's eating fine and doesn't seem bothered. No discharge from eyes or nose.",
+    "ground_truth_urgency": "monitor_at_home",
+    "expected_catch_layer": "llm",
+    "notes": "Isolated sneezing without systemic signs. Monitor for progression to nasal discharge or inappetence."
+  },
+  {
+    "case_id": "NORMAL_03",
+    "is_adversarial": false,
+    "pet_profile": {
+      "species": "dog",
+      "breed": "Beagle",
+      "age": 2.0,
+      "sex": "male",
+      "weight": 11.0,
+      "known_conditions": []
+    },
+    "symptom_text": "Charlie skipped breakfast today which is unusual, but he drank water normally and went on his walk without any problems. He's acting completely normal now.",
+    "ground_truth_urgency": "monitor_at_home",
+    "expected_catch_layer": "llm",
+    "notes": "Single missed meal in a young healthy dog without other signs. Benign as long as normal behavior persists."
+  },
+  {
+    "case_id": "NORMAL_04",
+    "is_adversarial": false,
+    "pet_profile": {
+      "species": "dog",
+      "breed": "Golden Retriever",
+      "age": 5.0,
+      "sex": "male",
+      "weight": 33.0,
+      "known_conditions": []
+    },
+    "symptom_text": "Max ate grass in the yard and vomited once about 2 hours ago. He seems totally fine now, was excited for his dinner, and his gums look pink.",
+    "ground_truth_urgency": "monitor_at_home",
+    "expected_catch_layer": "llm",
+    "notes": "Grass ingestion with single emesis and quick return to normal is classic and self-limiting."
+  },
+  {
+    "case_id": "NORMAL_05",
+    "is_adversarial": false,
+    "pet_profile": {
+      "species": "cat",
+      "breed": "Maine Coon",
+      "age": 7.0,
+      "sex": "male",
+      "weight": 6.8,
+      "known_conditions": []
+    },
+    "symptom_text": "Oliver has a small scratch on his front paw from playing. It bled a tiny bit but stopped on its own. He's grooming it but seems unbothered.",
+    "ground_truth_urgency": "monitor_at_home",
+    "expected_catch_layer": "llm",
+    "notes": "Minor superficial laceration with spontaneous hemostasis. Monitor for signs of infection over 24-48 hours."
+  },
+  {
+    "case_id": "NORMAL_06",
+    "is_adversarial": false,
+    "pet_profile": {
+      "species": "cat",
+      "breed": "Persian",
+      "age": 6.0,
+      "sex": "female",
+      "weight": 4.0,
+      "known_conditions": []
+    },
+    "symptom_text": "Cleo has some clear discharge in the corner of her eye. It started yesterday. She's not squinting or rubbing at it and her eye looks open and normal.",
+    "ground_truth_urgency": "office_appointment",
+    "expected_catch_layer": "llm",
+    "notes": "Clear ocular discharge in a brachycephalic breed warrants examination for conjunctivitis or epiphora, but not urgent."
+  },
+  {
+    "case_id": "NORMAL_07",
+    "is_adversarial": false,
+    "pet_profile": {
+      "species": "dog",
+      "breed": "Border Collie",
+      "age": 3.0,
+      "sex": "female",
+      "weight": 19.0,
+      "known_conditions": []
+    },
+    "symptom_text": "Sadie started limping on her front right leg after a long fetch session this afternoon. She can still put weight on it and isn't crying. She rested and it looks a little better.",
+    "ground_truth_urgency": "office_appointment",
+    "expected_catch_layer": "llm",
+    "notes": "Mild post-exercise lameness with weight-bearing. Office evaluation appropriate to rule out soft tissue injury, but not an emergency."
+  },
+  {
+    "case_id": "NORMAL_08",
+    "is_adversarial": false,
+    "pet_profile": {
+      "species": "cat",
+      "breed": "Siamese",
+      "age": 9.0,
+      "sex": "male",
+      "weight": 4.5,
+      "known_conditions": []
+    },
+    "symptom_text": "Mochi has been drinking a lot more water than usual for the last few days and using the litter box more. He's still eating and acting normal but I've noticed his water bowl is empty way faster.",
+    "ground_truth_urgency": "office_appointment",
+    "expected_catch_layer": "llm",
+    "notes": "Polyuria/polydipsia in a middle-aged cat warrants workup for CKD, hyperthyroidism, or diabetes. Not emergent but should be seen within days."
+  },
+  {
+    "case_id": "NORMAL_09",
+    "is_adversarial": false,
+    "pet_profile": {
+      "species": "dog",
+      "breed": "Cocker Spaniel",
+      "age": 4.0,
+      "sex": "female",
+      "weight": 13.0,
+      "known_conditions": []
+    },
+    "symptom_text": "Rosie has been shaking her head and there's a bad smell from her left ear. Started a couple days ago. She scratches at it sometimes. No discharge that I can see but she flinches when I touch it.",
+    "ground_truth_urgency": "office_appointment",
+    "expected_catch_layer": "llm",
+    "notes": "Classic otitis externa presentation in a breed predisposed to ear infections. Needs otoscopic exam and culture, but not an emergency."
+  },
+  {
+    "case_id": "NORMAL_10",
+    "is_adversarial": false,
+    "pet_profile": {
+      "species": "cat",
+      "breed": "Domestic Longhair",
+      "age": 8.0,
+      "sex": "female",
+      "weight": 5.1,
+      "known_conditions": []
+    },
+    "symptom_text": "I found a small lump on Mia's belly about 2 weeks ago. It hasn't really changed in size, maybe a centimeter. She doesn't react when I touch it. She eats and plays totally normally.",
+    "ground_truth_urgency": "office_appointment",
+    "expected_catch_layer": "llm",
+    "notes": "Slow-growing subcutaneous mass with no systemic signs warrants cytology to rule out mast cell tumor or lipoma; not an emergency but should not be ignored."
+  },
+  {
+    "case_id": "ADV_01",
+    "is_adversarial": true,
+    "pet_profile": {
+      "species": "cat",
+      "breed": "Domestic Shorthair",
+      "age": 4.0,
+      "sex": "male",
+      "weight": 5.0,
+      "known_conditions": []
+    },
+    "symptom_text": "Mochi keeps going in and out of his litter box but I think he's just constipated. He sits in there for a while and nothing happens. He did this like 4 times in the past hour.",
+    "ground_truth_urgency": "emergency",
+    "expected_catch_layer": "llm",
+    "notes": "Classic owner misattribution of urethral obstruction as constipation. Male cat repeatedly posturing in litter box with no output = blocked until proven otherwise. Rule engine may not trigger on the word 'constipated' alone; LLM must recognize the behavioral pattern + sex + species context."
+  },
+  {
+    "case_id": "ADV_02",
+    "is_adversarial": true,
+    "pet_profile": {
+      "species": "cat",
+      "breed": "Domestic Shorthair",
+      "age": 6.0,
+      "sex": "female",
+      "weight": 4.3,
+      "known_conditions": []
+    },
+    "symptom_text": "Whiskers has been hiding under the bed all day and won't come out even for food. She's normally really social. I can see her breathing but she's just staying there.",
+    "ground_truth_urgency": "emergency",
+    "expected_catch_layer": "llm",
+    "notes": "Cats hide as a pain/illness response; acute hiding + inappetence in a social cat signals severe systemic illness (could be cardiac, urethral, toxin, trauma). No specific keyword triggers the rule engine. LLM must recognize hiding + anorexia + behavioral change as a high-urgency pattern in cats."
+  },
+  {
+    "case_id": "ADV_03",
+    "is_adversarial": true,
+    "pet_profile": {
+      "species": "dog",
+      "breed": "Great Dane",
+      "age": 5.0,
+      "sex": "male",
+      "weight": 72.0,
+      "known_conditions": []
+    },
+    "symptom_text": "Zeus skipped dinner which is weird, and his belly looks a bit rounder than usual. He's been pacing around and can't seem to get comfortable. Tried to vomit once but nothing came up.",
+    "ground_truth_urgency": "emergency",
+    "expected_catch_layer": "llm",
+    "notes": "GDV (gastric dilatation-volvulus) in a giant breed dog. Owner describes restlessness, abdominal distension, and one unproductive vomiting attempt in colloquial terms. Rule engine needs 'retching' + 'distended' to trigger RF019; LLM must connect the behavioral cluster (inappetence + pacing + round belly + failed vomit) in a high-risk breed."
+  },
+  {
+    "case_id": "ADV_04",
+    "is_adversarial": true,
+    "pet_profile": {
+      "species": "cat",
+      "breed": "Ragdoll",
+      "age": 5.0,
+      "sex": "male",
+      "weight": 6.2,
+      "known_conditions": []
+    },
+    "symptom_text": "Felix is just sitting there with his mouth slightly open. He looks a little tired, maybe out of it. He wasn't like this this morning.",
+    "ground_truth_urgency": "emergency",
+    "expected_catch_layer": "llm",
+    "notes": "Open-mouth breathing in a cat is always an emergency (RF002), but the owner describes it as 'mouth slightly open' and 'looks tired' — softening language that may not hit keyword thresholds. LLM must recognize that any open-mouth appearance + lethargy in a cat warrants emergency triage."
+  },
+  {
+    "case_id": "ADV_05",
+    "is_adversarial": true,
+    "pet_profile": {
+      "species": "cat",
+      "breed": "Domestic Shorthair",
+      "age": 7.0,
+      "sex": "male",
+      "weight": 5.5,
+      "known_conditions": []
+    },
+    "symptom_text": "Something happened to Shadow's back legs. He dragged himself to the water bowl and now he's just lying there crying. I thought maybe he hurt himself jumping.",
+    "ground_truth_urgency": "emergency",
+    "expected_catch_layer": "llm",
+    "notes": "Aortic thromboembolism (saddle thrombus) in a cat. Owner attributes sudden hind limb paralysis to jumping injury. RF015 may not trigger because the keyword 'paralyzed' is absent. LLM must recognize dragging + crying + sudden onset in a cat as high probability for saddle thrombus, which is time-critical."
+  },
+  {
+    "case_id": "ADV_06",
+    "is_adversarial": true,
+    "pet_profile": {
+      "species": "dog",
+      "breed": "Poodle",
+      "age": 3.0,
+      "sex": "female",
+      "weight": 10.0,
+      "known_conditions": []
+    },
+    "symptom_text": "Coco got into a bunch of grapes that fell on the floor earlier today. She ate maybe 10 or 15 of them. She seems totally fine and is acting normal, eating dinner and everything.",
+    "ground_truth_urgency": "emergency",
+    "expected_catch_layer": "llm",
+    "notes": "Grape toxicity in dogs (RF027). The adversarial element is that the dog appears asymptomatic — owners frequently wait because the pet 'seems fine.' Renal failure begins silently. LLM must recognize that grape ingestion in dogs is always an emergency regardless of current presentation, and that decontamination must happen before symptoms develop."
+  },
+  {
+    "case_id": "ADV_07",
+    "is_adversarial": true,
+    "pet_profile": {
+      "species": "dog",
+      "breed": "Weimaraner",
+      "age": 6.0,
+      "sex": "female",
+      "weight": 30.0,
+      "known_conditions": []
+    },
+    "symptom_text": "Stella has been trying to throw up since this morning but nothing's coming out. She keeps getting up and lying down in different spots. This has been going on for about 3 hours.",
+    "ground_truth_urgency": "emergency",
+    "expected_catch_layer": "llm",
+    "notes": "GDV. Owner does not use the words 'retching' or 'bloated' but describes the behavioral hallmarks: persistent unproductive vomiting attempts + restlessness in a large deep-chested breed over hours. Rule engine keyword match unlikely. LLM must infer GDV risk from the behavioral pattern + breed context."
+  },
+  {
+    "case_id": "ADV_08",
+    "is_adversarial": true,
+    "pet_profile": {
+      "species": "cat",
+      "breed": "British Shorthair",
+      "age": 10.0,
+      "sex": "female",
+      "weight": 5.8,
+      "known_conditions": ["chronic kidney disease stage 2"]
+    },
+    "symptom_text": "Cleo's been bumping into the coffee table and walls today, which she never does. Her pupils look really wide. She's walking slowly, seems confused. Started this afternoon.",
+    "ground_truth_urgency": "emergency",
+    "expected_catch_layer": "llm",
+    "notes": "Hypertensive emergency with acute retinal detachment causing sudden blindness (RF040). Owner describes it as 'bumping into things' and 'confused' rather than 'blind.' CKD history is the critical context that makes hypertensive crisis the high-prior diagnosis. LLM must connect CKD + acute spatial disorientation + dilated pupils to hypertensive emergency."
+  },
+  {
+    "case_id": "ADV_09",
+    "is_adversarial": true,
+    "pet_profile": {
+      "species": "dog",
+      "breed": "French Bulldog",
+      "age": 4.0,
+      "sex": "male",
+      "weight": 12.0,
+      "known_conditions": []
+    },
+    "symptom_text": "Bruno was outside in the backyard for a few hours this afternoon since it's been really hot lately. Now he's panting a lot and seems a bit out of it — walked slowly inside and just flopped down.",
+    "ground_truth_urgency": "emergency",
+    "expected_catch_layer": "llm",
+    "notes": "Heatstroke (RF032) in a brachycephalic breed with compromised thermoregulation. Owner describes it as 'panting a lot' and 'a bit out of it' without using the word 'heatstroke.' LLM must combine prolonged heat exposure + altered mentation + brachycephalic breed to flag emergency; rule engine needs 'heatstroke'/'heat stroke' keyword to trigger."
+  },
+  {
+    "case_id": "ADV_10",
+    "is_adversarial": true,
+    "pet_profile": {
+      "species": "cat",
+      "breed": "Domestic Shorthair",
+      "age": 5.0,
+      "sex": "female",
+      "weight": 4.1,
+      "known_conditions": []
+    },
+    "symptom_text": "Mia feels cold when I hold her and she's just lying in the corner. She's not really responding much when I call her name or pet her. She seemed okay at breakfast.",
+    "ground_truth_urgency": "emergency",
+    "expected_catch_layer": "llm",
+    "notes": "Feline decompensatory shock. Owner describes the classic triad — hypothermia, obtundation, and unresponsiveness — using everyday language ('feels cold', 'not responding'). RF033 requires 'hypothermia' keyword; RF008 requires 'pale gums'. LLM must recognize that a cold, obtunded cat that deteriorated acutely is in shock until proven otherwise."
+  }
+]

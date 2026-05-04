@@ -1,0 +1,354 @@
+[
+  {
+    "id": "RF001",
+    "symptom": "labored breathing / respiratory distress",
+    "keywords": ["labored breathing", "can't breathe", "struggling to breathe", "breathing hard", "gasping", "respiratory distress"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "respiratory failure can progress to cardiac arrest within minutes; requires immediate oxygen and stabilization before any transport"
+  },
+  {
+    "id": "RF002",
+    "symptom": "open-mouth breathing",
+    "keywords": ["open mouth breathing", "breathing with mouth open", "panting with mouth open", "mouth breathing"],
+    "species": "cat",
+    "urgency": "emergency",
+    "reasoning": "cats are obligate nasal breathers; any open-mouth breathing indicates severe dyspnea and impending respiratory failure"
+  },
+  {
+    "id": "RF003",
+    "symptom": "cyanosis (blue, purple, or gray gums or tongue)",
+    "keywords": ["blue gums", "purple gums", "gray gums", "blue tongue", "gums look blue", "gums look gray"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "cyanosis indicates severe systemic hypoxemia and tissue oxygen deprivation; cardiac or respiratory arrest is imminent"
+  },
+  {
+    "id": "RF004",
+    "symptom": "orthopneic posture: elbows flared outward, neck extended, unable to lie down",
+    "keywords": ["elbows out", "neck stretched forward", "can't lie down", "refusing to lie down", "sitting up to breathe"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "orthopnea (inability to tolerate recumbency) indicates maximal respiratory compensation; collapse likely imminent"
+  },
+  {
+    "id": "RF005",
+    "symptom": "paradoxical chest-wall motion (chest and belly moving in opposite directions)",
+    "keywords": ["paradoxical breathing", "belly moves opposite", "chest caving in"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "paradoxical breathing pattern indicates pneumothorax or large pleural effusion severely impairing gas exchange"
+  },
+  {
+    "id": "RF006",
+    "symptom": "choking or pawing at mouth with inability to breathe",
+    "keywords": ["choking", "pawing at mouth", "pawing at face", "clawing at throat", "can't swallow"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "foreign body airway obstruction; complete obstruction causes brain death within 4-6 minutes"
+  },
+  {
+    "id": "RF007",
+    "symptom": "collapse or sudden loss of consciousness",
+    "keywords": ["collapsed", "fell over", "passed out", "unconscious", "unresponsive", "fainted"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "collapse indicates cardiac arrest, severe shock, neurological catastrophe, or critical hypoglycemia; requires immediate assessment and possible CPR"
+  },
+  {
+    "id": "RF008",
+    "symptom": "pale, white, or chalky gums",
+    "keywords": ["pale gums", "white gums", "gums look white", "gums are pale", "gums look light"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "pale mucous membranes indicate shock or severe hemorrhagic anemia; perfusion is critically compromised"
+  },
+  {
+    "id": "RF009",
+    "symptom": "weak or absent pulse with rapid heart rate",
+    "keywords": ["weak pulse", "can't feel pulse", "heart racing", "very fast heartbeat"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "combination of tachycardia and weak pulse indicates decompensatory shock with inadequate cardiac output"
+  },
+  {
+    "id": "RF010",
+    "symptom": "cat with slow or very low heart rate and weakness (bradycardia in shock)",
+    "keywords": ["slow heartbeat", "very slow pulse", "heart rate very low"],
+    "species": "cat",
+    "urgency": "emergency",
+    "reasoning": "unlike dogs, cats in decompensatory shock develop paradoxical bradycardia (< 150 bpm) with gray mucous membranes; this is a terminal pre-arrest finding"
+  },
+  {
+    "id": "RF011",
+    "symptom": "male cat straining in litter box with no urine output",
+    "keywords": ["straining to urinate", "no pee", "litter box straining", "can't pee", "nothing coming out", "trying to pee"],
+    "species": "cat_male",
+    "urgency": "emergency",
+    "reasoning": "urethral obstruction in male cats causes fatal uremia and cardiac arrhythmia within 24-48 hours if untreated; frequently mistaken for constipation by owners"
+  },
+  {
+    "id": "RF012",
+    "symptom": "male dog straining to urinate with no output",
+    "keywords": ["straining to pee", "can't urinate", "no urine", "blocked"],
+    "species": "dog_male",
+    "urgency": "emergency",
+    "reasoning": "urethral obstruction (often from uroliths) causes progressive azotemia and cardiovascular collapse"
+  },
+  {
+    "id": "RF013",
+    "symptom": "active seizure lasting more than 5 minutes",
+    "keywords": ["seizure", "convulsing", "fitting", "shaking all over", "grand mal"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "status epilepticus causes cerebral edema, hyperthermia, and permanent neuronal damage; requires IV benzodiazepine within minutes"
+  },
+  {
+    "id": "RF014",
+    "symptom": "3 or more seizures within 24 hours",
+    "keywords": ["multiple seizures", "seizures again", "another seizure", "third seizure"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "cluster seizures indicate uncontrolled status epilepticus with compounding risk of cerebral edema and hyperthermia"
+  },
+  {
+    "id": "RF015",
+    "symptom": "sudden hind limb paralysis or dragging of back legs in cat",
+    "keywords": ["dragging back legs", "back legs not working", "hind legs paralyzed", "can't use back legs", "back legs limp"],
+    "species": "cat",
+    "urgency": "emergency",
+    "reasoning": "sudden hind limb paralysis in cats is the hallmark of aortic thromboembolism (saddle thrombus); legs are typically cold and painful; time-sensitive condition with poor prognosis if untreated"
+  },
+  {
+    "id": "RF016",
+    "symptom": "sudden hind limb weakness or paralysis in dog",
+    "keywords": ["back legs not working", "can't walk", "hind end down", "paralyzed", "dragging legs"],
+    "species": "dog",
+    "urgency": "emergency",
+    "reasoning": "acute disc herniation (IVDD) or spinal cord trauma; surgical window for decompression is 24-48 hours before permanent paralysis"
+  },
+  {
+    "id": "RF017",
+    "symptom": "head pressing against wall or furniture",
+    "keywords": ["pressing head against wall", "head pressing", "leaning head into wall", "pushing head against things"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "compulsive head pressing is a sign of elevated intracranial pressure, hepatic encephalopathy, or toxic encephalopathy"
+  },
+  {
+    "id": "RF018",
+    "symptom": "sudden severe ataxia / unable to stand or walk",
+    "keywords": ["can't stand", "falling over", "staggering", "unable to walk", "very wobbly", "fell down"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "sudden onset inability to walk indicates central neurological event, toxin, or severe metabolic crisis requiring immediate evaluation"
+  },
+  {
+    "id": "RF019",
+    "symptom": "non-productive retching with visibly distended or bloated abdomen (dog)",
+    "keywords": ["retching", "unproductive retching", "trying to vomit nothing", "swollen belly", "bloated stomach", "distended abdomen"],
+    "species": "dog",
+    "urgency": "emergency",
+    "reasoning": "classic presentation of gastric dilatation-volvulus (GDV/bloat); stomach twists, cutting off blood supply; fatal within 1-2 hours without emergency surgery"
+  },
+  {
+    "id": "RF020",
+    "symptom": "restlessness and hypersalivation with swollen abdomen (dog)",
+    "keywords": ["pacing and drooling", "restless and belly swollen", "anxious and bloated"],
+    "species": "dog",
+    "urgency": "emergency",
+    "reasoning": "early GDV presentation before retching begins; large and giant breed dogs at highest risk"
+  },
+  {
+    "id": "RF021",
+    "symptom": "bright red blood or coffee-ground material in vomit",
+    "keywords": ["blood in vomit", "vomiting blood", "vomit looks like coffee grounds", "bloody vomit"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "hematemesis indicates GI hemorrhage; coffee-ground appearance indicates partially digested blood from gastric or upper GI source"
+  },
+  {
+    "id": "RF022",
+    "symptom": "large amounts of bright red blood in diarrhea with weakness or pallor",
+    "keywords": ["bloody diarrhea", "lots of blood in stool", "bright red blood in poop", "hemorrhagic diarrhea"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "hemorrhagic gastroenteritis or parvovirus with volume depletion and sepsis risk; small amounts of blood alone may be office_appointment"
+  },
+  {
+    "id": "RF023",
+    "symptom": "abdominal organ prolapse (tissue visible outside the body)",
+    "keywords": ["something hanging out", "organ outside body", "tissue protruding", "intestine visible"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "evisceration requires immediate surgical correction; exposed tissue dessicates and becomes nonviable rapidly"
+  },
+  {
+    "id": "RF024",
+    "symptom": "uncontrolled bleeding soaking through bandage or cloth within minutes",
+    "keywords": ["won't stop bleeding", "bleeding a lot", "blood soaking through", "uncontrolled bleeding"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "Class III/IV hemorrhage; blood volume loss >30% causes cardiovascular collapse; requires immediate compression and IV fluid resuscitation"
+  },
+  {
+    "id": "RF025",
+    "symptom": "open wound exposing bone or deep tissue",
+    "keywords": ["bone showing", "can see bone", "deep wound", "open fracture", "wound exposing muscle"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "open fractures and deep lacerations carry high infection risk and require surgical debridement within hours"
+  },
+  {
+    "id": "RF026",
+    "symptom": "penetrating chest or abdominal wound",
+    "keywords": ["stabbed", "puncture wound chest", "hole in chest", "penetrating wound", "impaled"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "chest penetration causes pneumothorax; abdominal penetration risks internal hemorrhage and septic peritonitis"
+  },
+  {
+    "id": "RF027",
+    "symptom": "known ingestion of grapes or raisins (any amount, dog)",
+    "keywords": ["ate grapes", "ate raisins", "ate some grapes", "got into raisins", "ingested grapes"],
+    "species": "dog",
+    "urgency": "emergency",
+    "reasoning": "grapes and raisins cause idiosyncratic acute renal failure in dogs; there is no established safe dose and toxicity is unpredictable; decontamination must occur before symptoms appear"
+  },
+  {
+    "id": "RF028",
+    "symptom": "known ingestion of xylitol (sugar-free gum, candy, peanut butter, baked goods)",
+    "keywords": ["ate xylitol", "sugar free gum", "got into gum", "xylitol", "sugar-free"],
+    "species": "dog",
+    "urgency": "emergency",
+    "reasoning": "xylitol triggers massive insulin release causing hypoglycemia within 30-60 minutes; higher doses cause acute liver failure"
+  },
+  {
+    "id": "RF029",
+    "symptom": "known ingestion of anticoagulant rodenticide (rat poison, d-CON, warfarin bait)",
+    "keywords": ["ate rat poison", "rat poison", "d-con", "rodenticide", "mouse bait", "ate bait"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "anticoagulant rodenticides cause coagulopathy with 3-7 day latency; treatment (Vitamin K) must begin before bleeding symptoms appear to prevent fatal internal hemorrhage"
+  },
+  {
+    "id": "RF030",
+    "symptom": "known ingestion of acetaminophen or Tylenol (any amount, cat)",
+    "keywords": ["tylenol", "acetaminophen", "pain reliever", "human pain med"],
+    "species": "cat",
+    "urgency": "emergency",
+    "reasoning": "cats lack hepatic glucuronidation; even a single regular-strength Tylenol tablet causes methemoglobinemia and fatal hepatic necrosis within hours"
+  },
+  {
+    "id": "RF031",
+    "symptom": "known acetaminophen ingestion (large dose, dog)",
+    "keywords": ["tylenol overdose", "ate a lot of tylenol", "ate many pain pills"],
+    "species": "dog",
+    "urgency": "emergency",
+    "reasoning": "large doses in dogs cause hepatotoxicity and methemoglobinemia; less sensitive than cats but still requires decontamination and NAC treatment"
+  },
+  {
+    "id": "RF032",
+    "symptom": "heatstroke: extreme panting with disorientation or collapse after heat exposure",
+    "keywords": ["heatstroke", "heat stroke", "overheated", "panting and confused", "panting and collapsed", "too hot"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "core temperature >41°C causes multi-organ failure, coagulopathy, and cerebral edema; rapid cooling and IV fluids are required immediately"
+  },
+  {
+    "id": "RF033",
+    "symptom": "suspected hypothermia: cold to touch, lethargic or unresponsive, shivering stopped",
+    "keywords": ["cold body", "very cold", "feels frozen", "not shivering anymore", "found outside in cold"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "severe hypothermia (< 32°C) causes ventricular fibrillation; counterintuitively, shivering cessation means the body has lost thermoregulatory capacity"
+  },
+  {
+    "id": "RF034",
+    "symptom": "suspected hypoglycemia with seizure or collapse in diabetic pet",
+    "keywords": ["diabetic", "blood sugar", "insulin", "hypoglycemia", "too much insulin"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "hypoglycemic seizures cause irreversible neuronal death; diabetic owners should administer corn syrup to gums en route if animal can swallow"
+  },
+  {
+    "id": "RF035",
+    "symptom": "anaphylaxis after insect sting, vaccination, or medication: facial swelling with collapse or rapid deterioration",
+    "keywords": ["allergic reaction", "face swelling", "swollen face", "bee sting", "anaphylaxis", "hives and collapse"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "anaphylactic shock causes distributive shock with airway compromise; epinephrine must be administered within minutes"
+  },
+  {
+    "id": "RF036",
+    "symptom": "suspected snakebite with progressive swelling, pain, or neurological signs",
+    "keywords": ["snakebite", "snake bite", "bit by snake", "puncture marks and swelling"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "pit viper envenomation causes tissue necrosis, coagulopathy, and cardiovascular collapse; antivenom window narrows quickly"
+  },
+  {
+    "id": "RF037",
+    "symptom": "active labor exceeding 1 hour of strong straining with no puppy or kitten delivered",
+    "keywords": ["can't deliver", "labor too long", "stuck during birth", "straining with no baby", "giving birth problem"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "dystocia (obstructed delivery) risks fetal death from hypoxia and maternal uterine rupture; requires obstetric intervention"
+  },
+  {
+    "id": "RF038",
+    "symptom": "mother seizing or becoming severely weak after whelping or queening",
+    "keywords": ["seizing after giving birth", "collapsed after delivery", "shaking after puppies", "seizure after kittens"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "eclampsia (puerperal tetany) from hypocalcemia caused by lactation demands; fatal without IV calcium gluconate"
+  },
+  {
+    "id": "RF039",
+    "symptom": "eye prolapse: eyeball partially or fully out of socket",
+    "keywords": ["eye popped out", "eye bulging", "eye coming out", "proptosis"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "globe proptosis requires replacement within 20-30 minutes to preserve vision; keep moist with saline-soaked cloth during transport"
+  },
+  {
+    "id": "RF040",
+    "symptom": "sudden complete blindness with dilated non-responsive pupils",
+    "keywords": ["suddenly blind", "can't see", "bumping into walls", "fixed dilated pupils", "pupils won't respond to light"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "acute onset blindness in cats is often caused by hypertensive retinal detachment (secondary to CKD or hyperthyroidism); treatment within 24 hours offers best chance of vision recovery"
+  },
+  {
+    "id": "RF041",
+    "symptom": "suspected spinal trauma with inability to move one or more limbs",
+    "keywords": ["hit by car", "fell from height", "spinal trauma", "can't move legs", "limbs not working after trauma"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "spinal cord compression from fracture or dislocation; improper handling worsens injury; requires immediate immobilization and imaging"
+  },
+  {
+    "id": "RF042",
+    "symptom": "difficulty giving birth: green or black discharge before any offspring is delivered",
+    "keywords": ["green discharge", "black discharge", "dark discharge during labor"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "dark placental discharge before delivery indicates placental separation and fetal hypoxia; offspring are at risk of stillbirth"
+  },
+  {
+    "id": "RF043",
+    "symptom": "known ingestion of ethylene glycol (antifreeze)",
+    "keywords": ["antifreeze", "ethylene glycol", "drank antifreeze", "got into antifreeze"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "ethylene glycol causes rapidly progressive acute renal failure; antidote (4-MP in dogs, ethanol in cats) must be administered within 3 hours of ingestion for cats, 8-12 hours for dogs"
+  },
+  {
+    "id": "RF044",
+    "symptom": "severe burns covering a significant body area",
+    "keywords": ["burnt", "severe burn", "burned skin", "scalded", "chemical burn"],
+    "species": "both",
+    "urgency": "emergency",
+    "reasoning": "burns >15% body surface area cause hypovolemic shock, infection risk, and severe pain requiring immediate fluid resuscitation"
+  }
+]
