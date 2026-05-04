@@ -15,10 +15,10 @@ from pathlib import Path
 
 import pytest
 
-from pettriage.rule_engine import _species_matches, run_rule_engine
-from pettriage.scehmas import PetProfile
+from src.rule_engine import _species_matches, run_rule_engine
+from src.schemas import PetProfile
 
-_DATA = Path(__file__).parent.parent / "pettriage" / "data"
+_DATA = Path(__file__).parent.parent / "data"
 RED_FLAGS: list[dict] = json.loads((_DATA / "red_flags.json").read_text())
 EVAL_CASES: list[dict] = json.loads((_DATA / "eval_dataset.json").read_text())
 

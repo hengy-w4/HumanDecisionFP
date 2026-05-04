@@ -1,4 +1,4 @@
-from pettriage.schemas import ModuleResult, PetProfile
+from src.schemas import ModuleResult, PetProfile
 
 
 def run_llm_triage(pet_profile: PetProfile, symptom_text: str) -> ModuleResult:

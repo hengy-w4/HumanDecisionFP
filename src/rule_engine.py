@@ -1,10 +1,11 @@
 import json
 from pathlib import Path
+from typing import Optional
 
-from pettriage.scehmas import ModuleResult, PetProfile
+from src.schemas import ModuleResult, PetProfile
 
 _RED_FLAGS: list[dict] = json.loads(
-    (Path(__file__).parent / "data" / "red_flags.json").read_text()
+    (Path(__file__).parent.parent / "data" / "red_flags.json").read_text()
 )
 
 _MALE_TOKENS = {"male", "m", "intact male", "neutered male", "unneutered male"}
@@ -20,7 +21,7 @@ def _species_matches(rule_species: str, rule_sex: str, profile: PetProfile) -> b
     return True
 
 
-def _first_matching_keyword(keywords: list[str], text: str) -> str | None:
+def _first_matching_keyword(keywords: list[str], text: str) -> Optional[str]:
     lower = text.lower()
     return next((kw for kw in keywords if kw.lower() in lower), None)
 
