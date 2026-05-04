@@ -2,7 +2,7 @@
 Rule engine unit tests.
 
 Coverage:
-  1. _species_matches – all species/sex combinations
+  1. _species_matches - current species/sex gating
   2. Each of the 44 red flags fires on its own first keyword (parametrized)
   3. Species gating – rules don't fire for the wrong species/sex
   4. Normal eval cases – no false positives
@@ -22,16 +22,12 @@ _DATA = Path(__file__).parent.parent / "data"
 RED_FLAGS: list[dict] = json.loads((_DATA / "red_flags.json").read_text())
 EVAL_CASES: list[dict] = json.loads((_DATA / "eval_dataset.json").read_text())
 
-# Canonical profile for each species tag used in red_flags.json
-_PROFILE_FOR_SPECIES: dict[str, PetProfile] = {
-    "both":     PetProfile(species="dog", sex="female", weight=20.0),
-    "cat":      PetProfile(species="cat", sex="female", weight=4.0),
-    "dog":      PetProfile(species="dog", sex="female", weight=20.0),
-    "cat_male": PetProfile(species="cat", sex="male",   weight=5.0),
-    "dog_male": PetProfile(species="dog", sex="male",   weight=22.0),
-    "dog_large":PetProfile(species="dog", sex="female", weight=30.0),
-    "neonatal": PetProfile(species="dog", sex="female", age=0.1),
-}
+def _profile_for_rule(rule: dict) -> PetProfile:
+    """Build a profile that should satisfy a rule's species/sex gate."""
+    species = "dog" if rule["species"] == "any" else rule["species"]
+    sex = "male" if rule["sex"] == "male" else "female"
+    weight = 22.0 if species == "dog" else 5.0
+    return PetProfile(species=species, sex=sex, weight=weight)
 
 
 # ---------------------------------------------------------------------------
@@ -39,50 +35,46 @@ _PROFILE_FOR_SPECIES: dict[str, PetProfile] = {
 # ---------------------------------------------------------------------------
 
 class TestSpeciesMatching:
-    def test_both_accepts_cat(self):
-        assert _species_matches("both", PetProfile(species="cat"))
+    def test_any_accepts_cat(self):
+        assert _species_matches("any", "any", PetProfile(species="cat"))
 
-    def test_both_accepts_dog(self):
-        assert _species_matches("both", PetProfile(species="dog"))
+    def test_any_accepts_dog(self):
+        assert _species_matches("any", "any", PetProfile(species="dog"))
 
     def test_cat_accepts_cat(self):
-        assert _species_matches("cat", PetProfile(species="cat"))
+        assert _species_matches("cat", "any", PetProfile(species="cat"))
 
     def test_cat_rejects_dog(self):
-        assert not _species_matches("cat", PetProfile(species="dog"))
+        assert not _species_matches("cat", "any", PetProfile(species="dog"))
 
     def test_dog_accepts_dog(self):
-        assert _species_matches("dog", PetProfile(species="dog"))
+        assert _species_matches("dog", "any", PetProfile(species="dog"))
 
     def test_dog_rejects_cat(self):
-        assert not _species_matches("dog", PetProfile(species="cat"))
+        assert not _species_matches("dog", "any", PetProfile(species="cat"))
 
-    def test_cat_male_requires_male_sex(self):
-        assert _species_matches("cat_male", PetProfile(species="cat", sex="male"))
-        assert not _species_matches("cat_male", PetProfile(species="cat", sex="female"))
+    def test_cat_rule_can_require_male_sex(self):
+        assert _species_matches("cat", "male", PetProfile(species="cat", sex="male"))
+        assert not _species_matches("cat", "male", PetProfile(species="cat", sex="female"))
 
-    def test_cat_male_rejects_unknown_sex(self):
-        assert not _species_matches("cat_male", PetProfile(species="cat", sex=None))
+    def test_male_rule_rejects_unknown_sex(self):
+        assert not _species_matches("cat", "male", PetProfile(species="cat", sex=None))
 
-    def test_cat_male_rejects_dog(self):
-        assert not _species_matches("cat_male", PetProfile(species="dog", sex="male"))
+    def test_cat_male_rule_rejects_dog(self):
+        assert not _species_matches("cat", "male", PetProfile(species="dog", sex="male"))
 
-    def test_dog_male_requires_male_sex(self):
-        assert _species_matches("dog_male", PetProfile(species="dog", sex="male"))
-        assert not _species_matches("dog_male", PetProfile(species="dog", sex="female"))
+    def test_dog_rule_can_require_male_sex(self):
+        assert _species_matches("dog", "male", PetProfile(species="dog", sex="male"))
+        assert not _species_matches("dog", "male", PetProfile(species="dog", sex="female"))
 
-    def test_dog_large_weight_threshold(self):
-        assert _species_matches("dog_large", PetProfile(species="dog", weight=25.0))
-        assert not _species_matches("dog_large", PetProfile(species="dog", weight=24.9))
-        assert not _species_matches("dog_large", PetProfile(species="cat", weight=30.0))
-
-    def test_neonatal_age_threshold(self):
-        assert _species_matches("neonatal", PetProfile(species="dog", age=0.1))
-        assert not _species_matches("neonatal", PetProfile(species="dog", age=0.5))
+    def test_any_rule_can_require_male_sex(self):
+        assert _species_matches("any", "male", PetProfile(species="dog", sex="male"))
+        assert _species_matches("any", "male", PetProfile(species="cat", sex="male"))
+        assert not _species_matches("any", "male", PetProfile(species="dog", sex="female"))
 
     def test_neutered_male_synonym(self):
-        assert _species_matches("cat_male", PetProfile(species="cat", sex="neutered male"))
-        assert _species_matches("dog_male", PetProfile(species="dog", sex="unneutered male"))
+        assert _species_matches("cat", "male", PetProfile(species="cat", sex="neutered male"))
+        assert _species_matches("dog", "male", PetProfile(species="dog", sex="unneutered male"))
 
 
 # ---------------------------------------------------------------------------
@@ -91,14 +83,14 @@ class TestSpeciesMatching:
 
 @pytest.mark.parametrize("rule", RED_FLAGS, ids=[r["id"] for r in RED_FLAGS])
 def test_red_flag_triggers_on_first_keyword(rule: dict):
-    profile = _PROFILE_FOR_SPECIES[rule["species"]]
+    profile = _profile_for_rule(rule)
     keyword = rule["keywords"][0]
     result = run_rule_engine(profile, keyword)
 
     assert result.urgency == "emergency", (
         f"{rule['id']} did not trigger emergency.\n"
         f"  Keyword used : '{keyword}'\n"
-        f"  Species tag  : {rule['species']}\n"
+        f"  Species tag  : {rule['species']}, sex tag: {rule['sex']}\n"
         f"  Profile used : species={profile.species}, sex={profile.sex}"
     )
     assert any(rule["id"] in t for t in result.triggered_rules), (
@@ -113,7 +105,7 @@ def test_red_flag_triggers_on_first_keyword(rule: dict):
 
 class TestSpeciesGating:
     def test_cat_male_urethral_block_skips_female_cat(self):
-        # RF011 is cat_male only
+        # RF011 is cat + male only
         profile = PetProfile(species="cat", sex="female")
         result = run_rule_engine(profile, "straining to urinate")
         assert result.urgency != "emergency", (
@@ -121,11 +113,11 @@ class TestSpeciesGating:
         )
 
     def test_cat_male_urethral_block_skips_male_dog(self):
-        # RF011 is cat_male; RF012 (dog_male) has different keywords
+        # RF011 is cat + male; RF012 (dog + male) has different keywords
         profile = PetProfile(species="dog", sex="male")
         result = run_rule_engine(profile, "straining to urinate")
         assert result.urgency != "emergency", (
-            "RF011 ('straining to urinate') keyword is cat_male only and "
+            "RF011 ('straining to urinate') keyword is cat + male only and "
             "should not fire for a male dog"
         )
 
@@ -140,7 +132,7 @@ class TestSpeciesGating:
 
     def test_open_mouth_breathing_skips_dog(self):
         # RF002 keyword "open mouth breathing" is cat-only;
-        # RF001 ("both") uses "labored breathing" / "struggling to breathe"
+        # RF001 ("any") uses "labored breathing" / "struggling to breathe"
         profile = PetProfile(species="dog", sex="female")
         result = run_rule_engine(profile, "open mouth breathing")
         assert result.urgency != "emergency", (
@@ -148,7 +140,7 @@ class TestSpeciesGating:
         )
 
     def test_dog_male_urethral_block_skips_female_dog(self):
-        # RF012 is dog_male only
+        # RF012 is dog + male only
         profile = PetProfile(species="dog", sex="female")
         result = run_rule_engine(profile, "can't urinate no urine blocked")
         assert result.urgency != "emergency", (
