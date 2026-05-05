@@ -39,46 +39,42 @@
   color: #0c5e58;
 }
 
-.chat-layout {
-  display: grid;
-  grid-template-columns: minmax(300px, 420px) minmax(0, 1fr);
-  gap: 24px;
-  align-items: start;
-}
-
-.chat-panel,
-.chat-response {
+.chat-start-card,
+.chat-window,
+.final-result {
   border: 1px solid #dce7e4;
   border-radius: 8px;
   background: #ffffff;
   box-shadow: 0 18px 44px rgba(29, 54, 52, 0.08);
 }
 
-.chat-panel {
-  padding: 22px;
+.chat-start-card {
+  width: min(680px, 100%);
+  margin: 0 auto;
+  padding: 24px;
 }
 
-.chat-panel__heading h2,
-.chat-response h2 {
+.chat-start-card h2,
+.chat-window h2,
+.final-result h2 {
   margin: 0;
   color: #172b2a;
 }
 
-.symptom-input {
+.chat-composer {
   display: grid;
   gap: 12px;
   margin-top: 18px;
 }
 
-.symptom-input label {
+.chat-composer label {
   color: #244746;
   font-weight: 800;
 }
 
-.symptom-input textarea {
+.chat-composer textarea {
   width: 100%;
   resize: vertical;
-  min-height: 180px;
   padding: 14px;
   border: 1px solid #cadbd8;
   border-radius: 8px;
@@ -88,14 +84,31 @@
   background: #fbfcfc;
 }
 
-.symptom-input textarea:focus {
+.chat-composer textarea:focus {
   outline: 3px solid rgba(15, 118, 110, 0.16);
   border-color: #0f766e;
 }
 
-.symptom-input button:disabled {
+.chat-composer button:disabled {
   cursor: not-allowed;
   opacity: 0.68;
+}
+
+.chat-composer--start textarea {
+  min-height: 180px;
+}
+
+.chat-composer--sticky {
+  position: sticky;
+  bottom: 0;
+  margin-top: 0;
+  padding-top: 16px;
+  border-top: 1px solid #e8efed;
+  background: #ffffff;
+}
+
+.chat-composer--sticky textarea {
+  min-height: 92px;
 }
 
 .input-error {
@@ -114,54 +127,32 @@
   line-height: 1.45;
 }
 
-.chat-response {
+.chat-window {
   display: grid;
   gap: 18px;
   padding: 22px;
 }
 
-.chat-response--empty {
-  min-height: 360px;
-  align-content: center;
-}
-
-.chat-response--empty p:not(.eyebrow) {
-  max-width: 520px;
-  margin: 8px 0 0;
-  color: #526261;
-  line-height: 1.6;
-}
-
-.chat-response__header {
+.chat-window__header,
+.final-result__header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
 }
 
-.response-meta {
-  display: grid;
-  justify-items: end;
-  gap: 6px;
-}
-
-.response-meta span,
-.response-meta strong {
+.chat-window__header span {
   color: #71807e;
   font-size: 0.86rem;
   white-space: nowrap;
 }
 
-.response-meta strong {
-  padding: 5px 8px;
-  border-radius: 999px;
-  background: #eaf5f2;
-  color: #0c5e58;
-}
-
 .chat-thread {
   display: grid;
   gap: 12px;
+  max-height: 48vh;
+  overflow: auto;
+  padding: 2px 2px 4px;
 }
 
 .chat-message {
@@ -183,6 +174,20 @@
   margin: 0;
 }
 
+.clarifying-button {
+  justify-self: start;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid #d8e5e2;
+  background: #ffffff;
+  color: #0c5e58;
+  font-size: 0.9rem;
+}
+
+.clarifying-button:hover {
+  border-color: #91bdb5;
+}
+
 .chat-message--owner {
   justify-self: end;
   background: #eaf5f2;
@@ -194,25 +199,6 @@
   border: 1px solid #e5ecea;
   background: #fbfcfc;
   color: #526261;
-}
-
-.api-status {
-  margin: 0;
-  padding: 12px 14px;
-  border-radius: 8px;
-  font-size: 0.92rem;
-  font-weight: 800;
-  line-height: 1.45;
-}
-
-.api-status--success {
-  background: #e7f5ec;
-  color: #23633b;
-}
-
-.api-status--warning {
-  background: #fff7e8;
-  color: #6f521b;
 }
 
 .urgency-card {
@@ -309,8 +295,13 @@
   justify-self: end;
 }
 
+.final-result {
+  display: grid;
+  gap: 18px;
+  padding: 18px;
+}
+
 @media (max-width: 900px) {
-  .chat-layout,
   .response-grid {
     grid-template-columns: 1fr;
   }
@@ -322,22 +313,21 @@
     padding-top: 24px;
   }
 
-  .chat-panel,
-  .chat-response {
+  .chat-start-card,
+  .chat-window,
+  .final-result {
     padding: 18px;
   }
 
-  .chat-response__header,
+  .chat-window__header,
+  .final-result__header,
   .urgency-card {
     grid-template-columns: 1fr;
   }
 
-  .chat-response__header {
+  .chat-window__header,
+  .final-result__header {
     display: grid;
-  }
-
-  .response-meta {
-    justify-items: start;
   }
 
   .chat-message {
