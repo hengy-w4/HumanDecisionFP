@@ -12,11 +12,34 @@ Correctness = Literal["yes", "no", "not_sure"]
 
 class PetProfile(BaseModel):
     species: str
+    pet_name: Optional[str] = None
+    owner_name: Optional[str] = None
     breed: Optional[str] = None
     age: Optional[float] = None
     sex: Optional[str] = None
     weight: Optional[float] = None
+    spayed_neutered: Optional[str] = None
     known_conditions: list[str] = []
+    medications: list[str] = []
+    vaccination_status: Optional[str] = None
+
+
+class PetProfileUpdate(BaseModel):
+    species: Optional[str] = None
+    pet_name: Optional[str] = None
+    owner_name: Optional[str] = None
+    breed: Optional[str] = None
+    age: Optional[float] = None
+    sex: Optional[str] = None
+    weight: Optional[float] = None
+    spayed_neutered: Optional[str] = None
+    known_conditions: Optional[list[str]] = None
+    medications: Optional[list[str]] = None
+    vaccination_status: Optional[str] = None
+
+
+class PetProfileRecord(PetProfile):
+    id: str
 
 
 class TriageRequest(BaseModel):
