@@ -1,4 +1,6 @@
 export default function ReasoningSection({ result }) {
+  const hasRedFlags = result.redFlags.length > 0;
+
   return (
     <section className="result-section" aria-labelledby="reasoning-title">
       <div className="result-section__heading">
@@ -15,12 +17,14 @@ export default function ReasoningSection({ result }) {
 
       <div className="red-flag-panel">
         <h3>Red flags detected</h3>
-        {result.redFlags.length > 0 ? (
+        {hasRedFlags ? (
           <ul>
             {result.redFlags.map((flag) => (
               <li key={flag}>{flag}</li>
             ))}
           </ul>
+        ) : result.urgency === "Emergency" ? (
+          <p>Emergency-level symptoms were identified in the triage assessment.</p>
         ) : (
           <p>No emergency red flags were detected in the submitted symptoms.</p>
         )}
