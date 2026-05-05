@@ -48,7 +48,7 @@ export default function LoginPage({ onLogin }) {
               ? "Enter your email and we will send password reset instructions."
               : isSignup
               ? `Set up access to save ${mockProfile.petName}'s profile, symptom checks, and care notes.`
-              : `Sign in to review ${mockProfile.petName}'s profile, continue symptom checks, and keep triage notes in one place.`}
+              : `Sign in to review your pets' profile, continue symptom checks, and keep triage notes in one place.`}
           </p>
         </header>
 

@@ -2,35 +2,40 @@
   display: grid;
   min-height: 100vh;
   place-items: center;
-  padding: 32px 16px;
+  padding: 24px 16px;
 }
 
 .login-shell {
-  width: min(480px, 100%);
+  width: min(520px, 100%);
 }
 
 .login-header {
   display: grid;
-  gap: 18px;
-  margin-bottom: 24px;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
 .login-header h1 {
   margin: 0;
   color: #172b2a;
-  font-size: clamp(2rem, 7vw, 3.2rem);
-  line-height: 1.05;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  line-height: 1.08;
   text-align: center;
 }
 
 .login-header p:not(.eyebrow) {
-  margin: 14px 0 0;
+  margin: 0;
   color: #526261;
+  font-size: 1.0625rem;
   line-height: 1.6;
   text-align: center;
 }
 
 .login-header .eyebrow {
+  margin-bottom: 0;
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 0;
   text-align: center;
 }
 
@@ -42,36 +47,40 @@
 }
 
 .login-panel {
-  padding: 22px;
+  padding: 28px;
 }
 
 .login-panel h2 {
   margin: 0;
   color: #172b2a;
+  font-size: 1.5rem;
+  line-height: 1.2;
 }
 
 .login-form {
   display: grid;
   gap: 16px;
-  margin-top: 18px;
+  margin-top: 16px;
 }
 
 .login-form label {
   display: grid;
   gap: 8px;
   color: #244746;
+  font-size: 0.9375rem;
   font-weight: 800;
 }
 
 .login-form input {
   width: 100%;
-  min-height: 44px;
-  padding: 12px;
+  min-height: 48px;
+  padding: 12px 14px;
   border: 1px solid #cadbd8;
   border-radius: 8px;
   background: #fbfcfc;
   color: #172b2a;
   font: inherit;
+  font-size: 1rem;
   line-height: 1.4;
 }
 
@@ -92,7 +101,7 @@
   grid-template-columns: none;
   flex-direction: row;
   align-items: center;
-  gap: 10px !important;
+  gap: 8px !important;
   font-size: 0.92rem;
 }
 
@@ -129,6 +138,9 @@
 
 .login-form .primary-button {
   width: 100%;
+  min-height: 52px;
+  padding: 0 24px;
+  font-size: 1.0625rem;
 }
 
 .auth-switch {
@@ -136,18 +148,26 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin-top: 18px;
+  margin-top: 16px;
   color: #526261;
   font-size: 0.94rem;
 }
 
 @media (max-width: 540px) {
   .login-page {
-    padding: 24px 12px;
+    padding: 20px 12px;
   }
 
   .login-panel {
-    padding: 18px;
+    padding: 20px;
+  }
+
+  .login-header h1 {
+    font-size: clamp(1.875rem, 10vw, 2.25rem);
+  }
+
+  .login-header p:not(.eyebrow) {
+    font-size: 1rem;
   }
 
   .login-form__options {
