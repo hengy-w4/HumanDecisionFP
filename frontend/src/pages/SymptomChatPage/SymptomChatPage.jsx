@@ -81,14 +81,23 @@ export default function SymptomChatPage({
           : nextResult.reasoning,
         canAnswerClarifyingQuestion: needsClarification,
       };
+      const completedMessages = [...nextMessages, assistantMessage];
 
-      setMessages([...nextMessages, assistantMessage]);
+      setMessages(completedMessages);
 
       if (needsClarification) {
         setFinalResult(null);
       } else {
-        setFinalResult(nextResult);
-        onTriageComplete?.(nextResult);
+        const completedResult = {
+          ...nextResult,
+          chatHistory: completedMessages.map((message) => ({
+            id: message.id,
+            role: message.role,
+            content: message.content,
+          })),
+        };
+        setFinalResult(completedResult);
+        onTriageComplete?.(completedResult);
       }
 
       setIsAnsweringClarifyingQuestion(false);

@@ -6,15 +6,10 @@ export default function ReasoningSection({ result }) {
         <h2 id="reasoning-title">Why PetTriage chose this level</h2>
       </div>
 
-      <div className="reasoning-layout">
+      <div className="reasoning-layout reasoning-layout--single">
         <div className="reasoning-copy">
           <h3>Assessment</h3>
           <p>{result.reasoning}</p>
-        </div>
-
-        <div className="reasoning-copy">
-          <h3>Clarifying question</h3>
-          <p>{result.clarifyingQuestion}</p>
         </div>
       </div>
 
