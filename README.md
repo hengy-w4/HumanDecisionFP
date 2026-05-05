@@ -1,270 +1,139 @@
 # PetTriage
 
-PetTriage is a full-stack pet symptom triage prototype. It combines a React/Vite frontend with a FastAPI backend, deterministic emergency red-flag rules, and an OpenAI-powered LLM triage module.
+PetTriage helps a pet owner describe symptoms, chat with an assistant, and get a clear urgency recommendation.
 
-The app lets a pet owner:
+It is not a diagnosis. If your pet is very sick, getting worse quickly, having trouble breathing, collapsing, bleeding badly, having seizures, or may have eaten something dangerous, contact a veterinarian or emergency clinic right away.
 
-- Sign in to a session
-- Review a pet profile
-- Chat with the PetTriage Assistant about symptoms
-- Receive an urgency recommendation
-- Review a final triage report
-- Submit local vet outcome feedback
+## What You Can Do
 
-PetTriage is not a diagnosis and is not a substitute for veterinary care.
+- Sign in
+- See your pet dashboard
+- Edit your pet profile
+- Start a symptom chat
+- Answer follow-up questions
+- View the final urgency report
+- Share vet feedback after you know what happened
 
-## Tech Stack
 
-- Frontend: React, Vite, CSS
-- Backend: FastAPI, Pydantic, Uvicorn
-- LLM: OpenAI Python SDK
-- Tests: pytest
+## Step 1: Sign In
 
-## Project Structure
+Use the sign-in screen to enter an email and password.
+
+This is a session-only demo, so any reasonable email and password will let you continue.
+
+## Step 2: Check the Home Page
+
+On the Home page, you can:
+
+- Start a new symptom check
+- Open the pet profile
+- Review screening history
+
+In Screening History:
+
+- Only the first few checks show at first
+- Click `Show all` to see more
+- Click a screening card to open its details
+- Click outside the section to close the open details
+
+## Step 3: Edit the Pet Profile
+
+Open `Profile`.
+
+You can update:
+
+- Pet name
+- Species
+- Breed
+- Age
+- Weight
+- Sex
+- Spay/neuter status
+- Vaccination status
+- Known conditions
+- Medications
+
+Click `Save Profile`.
+
+## Step 4: Start a Symptom Chat
+
+Open `Chatbot` or click `Start New Symptom Check`.
+
+Type what is happening with the pet.
+
+Example:
 
 ```text
-.
-├── data/
-│   ├── red_flags.json
-│   └── eval_dataset.json
-├── frontend/
-│   ├── src/
-│   │   ├── api/
-│   │   ├── data/
-│   │   ├── pages/
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── package.json
-│   └── vite.config.js
-├── src/
-│   ├── config.py
-│   ├── llm_triage.py
-│   ├── main.py
-│   ├── prompt_templates.py
-│   ├── rule_engine.py
-│   └── schemas.py
-├── tests/
-├── requirements.txt
-└── README.md
+Mochi vomited twice today, seems tired, and does not want to eat dinner.
 ```
 
-## Urgency Levels
+Click `Send Message`.
 
-The backend uses these canonical urgency values:
+## Step 5: Answer Follow-Up Questions
 
-- `monitor_at_home`
-- `office_appointment`
-- `emergency`
+PetTriage may ask a follow-up question.
 
-The frontend displays them as:
+If you see an `Answer clarifying question` button:
+
+1. Click it
+2. Add more details
+3. Send the message
+
+The assistant keeps the conversation together, so each answer helps the final recommendation.
+
+## Step 6: Review the Final Result
+
+After the assistant has enough information, you will see:
+
+- Urgency result
+- Confidence
+- Reasoning
+- Red flags
+- Recommended action
+
+Urgency can be:
 
 - `Monitor`
 - `Urgent`
 - `Emergency`
 
-## Setup
+If the result is `Emergency`, red flags will be shown. The app should never show `Emergency` with no red flags.
 
-### Backend
+## Step 7: Open the Full Report
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
+Click `View Full Result`.
 
-Create a local `.env` file:
+The report shows:
 
-```bash
-OPENAI_API_KEY=your_key_here
-OPENAI_MODEL=gpt-4o-mini
-```
+- Urgency result
+- Clinical reasoning
+- Red flags
+- Recommended next step
+- Chat history
+- Pet context
+- Safety reminder
 
-Do not commit `.env` or paste API keys into chat/logs.
+The Chat History panel scrolls inside the card so the report does not become too long.
 
-Run the backend:
+## Step 8: Give Vet Feedback
 
-```bash
-uvicorn src.main:app --host 127.0.0.1 --port 8000
-```
+From the report, click `Go to Feedback Form`.
 
-API docs:
+Fill out:
 
-```text
-http://127.0.0.1:8000/docs
-```
+- Did you visit a vet?
+- What did the vet recommend?
+- Was PetTriage correct?
+- Actual diagnosis or vet notes
+- Additional comments
 
-### Frontend
+Click `Submit Feedback`.
 
-```bash
-cd frontend
-npm install
-npm run dev -- --host 127.0.0.1
-```
+This feedback form is saved only for the current app session.
 
-Open:
 
-```text
-http://127.0.0.1:5173/
-```
+## Safety Reminder
 
-The frontend expects the backend at:
+PetTriage only gives urgency guidance. It does not diagnose your pet.
 
-```text
-http://127.0.0.1:8000
-```
-
-You can override this with:
-
-```bash
-VITE_API_BASE_URL=http://127.0.0.1:8000
-```
-
-## Main App Flow
-
-1. Log in from the session login page.
-2. Use the Home dashboard to open the chatbot or profile.
-3. Chat with PetTriage Assistant about symptoms.
-4. The frontend sends the conversation context to `POST /triage`.
-5. The backend runs emergency rules first, then the LLM if no rule emergency is triggered.
-6. The chatbot displays assistant messages and a final urgency result.
-7. The final report shows urgency, clinical reasoning, red flags, chat history, pet context, and next steps.
-8. The feedback form collects vet outcome details locally in the frontend.
-
-## Backend Endpoints
-
-### `POST /triage`
-
-Runs rule-based and LLM-based triage.
-
-Example:
-
-```bash
-curl -X POST "http://127.0.0.1:8000/triage" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "pet_profile": {
-      "species": "dog",
-      "pet_name": "Mochi",
-      "breed": "Corgi mix",
-      "age": 5,
-      "sex": "Female",
-      "weight": 24,
-      "known_conditions": ["Sensitive stomach"]
-    },
-    "symptom_text": "Mochi has vomited twice today and seems tired."
-  }'
-```
-
-Example response:
-
-```json
-{
-  "final_urgency": "office_appointment",
-  "decision_source": "llm",
-  "reasoning": "The symptoms warrant veterinary evaluation...",
-  "rule_result": {
-    "urgency": "monitor_at_home",
-    "source": "rule_engine",
-    "reasoning": "No hard red-flag rule was triggered.",
-    "confidence": "medium",
-    "clarifying_question": null,
-    "triggered_rules": []
-  },
-  "llm_result": {
-    "urgency": "office_appointment",
-    "source": "llm",
-    "reasoning": "The symptoms warrant veterinary evaluation...",
-    "confidence": "medium",
-    "clarifying_question": "Has Mochi had diarrhea or signs of pain?",
-    "triggered_rules": []
-  }
-}
-```
-
-### `POST /profiles`
-
-Creates an in-memory pet profile.
-
-### `GET /profiles`
-
-Lists in-memory pet profiles.
-
-### `GET /profiles/{profile_id}`
-
-Gets one pet profile.
-
-### `PUT /profiles/{profile_id}`
-
-Updates one pet profile.
-
-### `POST /overrides`
-
-Stores an in-memory owner override for a triage result.
-
-### `GET /overrides`
-
-Lists in-memory override records.
-
-### `POST /vet-feedback`
-
-Stores an in-memory vet feedback record. The current frontend feedback page is local-only, but the backend endpoint is available for future integration.
-
-### `GET /vet-feedback`
-
-Lists in-memory vet feedback records.
-
-## Triage Decision Flow
-
-1. Run the deterministic rule engine against `data/red_flags.json`.
-2. If a rule returns `emergency`, return that emergency result immediately.
-3. Otherwise, call the LLM triage module.
-4. If the LLM returns `emergency`, return the LLM emergency result.
-5. Otherwise, return the LLM urgency and reasoning.
-
-Emergency consistency is enforced:
-
-- Emergency rule results include triggered rules.
-- LLM emergency results are normalized to include at least one red flag.
-- The frontend never displays `Emergency` with `No red flags detected`.
-
-## Frontend Pages
-
-- `LoginPage`: session login/signup/reset UI
-- `HomePage`: dashboard, pet profile summary, interactive screening history
-- `PetProfilePage`: editable pet profile form
-- `SymptomChatPage`: conversational PetTriage Assistant
-- `TriageResultPage`: final urgency report with chat history and pet context
-- `VetFeedbackPage`: frontend-only vet outcome feedback form
-
-## Testing
-
-Run backend tests:
-
-```bash
-pytest
-```
-
-Build frontend:
-
-```bash
-cd frontend
-npm run build
-```
-
-Expected current status:
-
-```text
-105 passed
-vite build successful
-```
-
-## Notes
-
-- Backend records for profiles, overrides, and vet feedback are stored in memory and reset when the server restarts.
-- The frontend currently uses mock profile/history data for the UI experience.
-- The chatbot sends conversation context to the backend as free-text `symptom_text`.
-- OpenAI failures fall back to conservative office-appointment guidance.
-
-## Safety Disclaimer
-
-PetTriage is for educational and software development purposes. It provides urgency guidance only, not diagnosis or treatment. For severe symptoms, rapid worsening, suspected poisoning, breathing problems, collapse, seizures, uncontrolled bleeding, or any urgent concern, contact a licensed veterinarian or emergency veterinary clinic immediately.
+When in doubt, call a veterinarian.
