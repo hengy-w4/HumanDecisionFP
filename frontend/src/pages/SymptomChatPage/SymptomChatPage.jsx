@@ -82,7 +82,11 @@ function createTriageResult(symptoms) {
   };
 }
 
-export default function SymptomChatPage({ onNavigateHome }) {
+export default function SymptomChatPage({
+  onNavigateHome,
+  onNavigateResult,
+  onTriageComplete,
+}) {
   const [symptoms, setSymptoms] = useState("");
   const [result, setResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -101,7 +105,12 @@ export default function SymptomChatPage({ onNavigateHome }) {
     setIsLoading(true);
 
     window.setTimeout(() => {
-      setResult(createTriageResult(trimmedSymptoms));
+      const nextResult = {
+        ...createTriageResult(trimmedSymptoms),
+        symptoms: trimmedSymptoms,
+      };
+      setResult(nextResult);
+      onTriageComplete(nextResult);
       setIsLoading(false);
     }, 350);
   };
@@ -141,7 +150,7 @@ export default function SymptomChatPage({ onNavigateHome }) {
           </div>
         </section>
 
-        <ChatbotResponseArea result={result} />
+        <ChatbotResponseArea result={result} onViewResult={onNavigateResult} />
       </div>
     </main>
   );

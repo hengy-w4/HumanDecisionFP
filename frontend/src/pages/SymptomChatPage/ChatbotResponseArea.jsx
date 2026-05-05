@@ -1,6 +1,6 @@
 import MiniUrgencyCard from "./MiniUrgencyCard.jsx";
 
-export default function ChatbotResponseArea({ result }) {
+export default function ChatbotResponseArea({ result, onViewResult }) {
   if (!result) {
     return (
       <section className="chat-response chat-response--empty">
@@ -59,6 +59,10 @@ export default function ChatbotResponseArea({ result }) {
           <p>{result.clarifyingQuestion}</p>
         </section>
       </div>
+
+      <button className="primary-button response-action" type="button" onClick={onViewResult}>
+        View Full Result
+      </button>
     </section>
   );
 }

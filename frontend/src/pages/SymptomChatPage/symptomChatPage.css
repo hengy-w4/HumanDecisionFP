@@ -235,6 +235,10 @@
   padding-left: 20px;
 }
 
+.response-action {
+  justify-self: end;
+}
+
 @media (max-width: 900px) {
   .chat-layout,
   .response-grid {
@@ -263,6 +267,10 @@
   }
 
   .urgency-card__confidence {
+    justify-self: stretch;
+  }
+
+  .response-action {
     justify-self: stretch;
   }
 }
