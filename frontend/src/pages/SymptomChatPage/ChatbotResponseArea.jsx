@@ -19,7 +19,7 @@ export default function ChatbotResponseArea({ result, onViewResult }) {
       <div className="chat-response__header">
         <div>
           <p className="eyebrow">Chatbot Response</p>
-          <h2 id="response-title">Backend LLM triage</h2>
+          <h2 id="response-title">PetTriage Assistant</h2>
         </div>
         <div className="response-meta">
           <span>{result.timestamp}</span>
@@ -45,7 +45,9 @@ export default function ChatbotResponseArea({ result, onViewResult }) {
             : "api-status api-status--success"
         }
       >
-        {result.statusMessage}
+        {result.isFallback
+          ? "PetTriage needs a little more information before it can provide a confident recommendation."
+          : "PetTriage response received."}
       </p>
 
       <MiniUrgencyCard

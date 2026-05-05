@@ -87,8 +87,8 @@ export function formatTriageResponse(response, symptoms) {
       decisionSourceLabels[response.decision_source] || response.decision_source,
     isFallback,
     statusMessage: isFallback
-      ? "Backend connected, but the LLM returned the fallback response. Check OPENAI_API_KEY on the backend."
-      : "Backend LLM response received.",
+      ? "PetTriage needs a little more information before it can provide a confident recommendation."
+      : "PetTriage response received.",
     timestamp: "Just now",
   };
 }
@@ -109,7 +109,7 @@ export async function submitTriage({ profile, symptoms }) {
     });
   } catch {
     throw new Error(
-      "Could not reach the triage API. Make sure the backend is running on http://127.0.0.1:8000.",
+      "PetTriage is unavailable right now. Please try again in a moment.",
     );
   }
 
