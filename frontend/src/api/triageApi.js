@@ -32,6 +32,38 @@ const recommendedActions = {
     "Monitor at home, keep notes on any changes, and contact your vet if symptoms worsen or continue.",
 };
 
+const emergencyRedFlagKeywords = [
+  {
+    label: "difficulty breathing",
+    keywords: ["difficulty breathing", "trouble breathing", "can't breathe", "cannot breathe", "breathing"],
+  },
+  {
+    label: "collapse or weakness",
+    keywords: ["collapse", "collapsed", "weakness", "weak", "unable to stand"],
+  },
+  { label: "seizure", keywords: ["seizure", "seizing"] },
+  {
+    label: "severe pain",
+    keywords: ["severe pain", "extreme pain", "pain"],
+  },
+  {
+    label: "poison or toxin exposure",
+    keywords: ["poison", "toxin", "toxic", "ingestion", "ate unknown"],
+  },
+  {
+    label: "severe bleeding",
+    keywords: ["bleeding", "blood loss"],
+  },
+  {
+    label: "pale or blue gums",
+    keywords: ["blue gums", "pale gums", "gum color"],
+  },
+  {
+    label: "blocked urination",
+    keywords: ["straining to urinate", "unable to urinate", "urine", "urinating"],
+  },
+];
+
 function parseNumber(value) {
   if (typeof value === "number") {
     return value;
@@ -64,6 +96,23 @@ function formatRedFlags(triggeredRules = []) {
   return triggeredRules.map((rule) => rule.replace(/\s*\[matched:.*\]$/, ""));
 }
 
+function uniqueValues(values) {
+  return [...new Set(values.filter(Boolean))];
+}
+
+function deriveEmergencyRedFlags(text) {
+  const lowerText = text.toLowerCase();
+  const flags = emergencyRedFlagKeywords
+    .filter(({ keywords }) =>
+      keywords.some((keyword) => lowerText.includes(keyword)),
+    )
+    .map(({ label }) => label);
+
+  return flags.length > 0
+    ? flags
+    : ["Emergency-level symptoms described in the triage assessment"];
+}
+
 export function formatTriageResponse(response, symptoms) {
   const moduleResult = getSelectedModuleResult(response);
   const finalUrgency = response.final_urgency;
@@ -71,6 +120,14 @@ export function formatTriageResponse(response, symptoms) {
   const triggeredRules = response.rule_result?.triggered_rules || [];
   const llmRules = response.llm_result?.triggered_rules || [];
   const isFallback = llmRules.includes("fallback_error");
+  const formattedRedFlags = uniqueValues([
+    ...formatRedFlags(triggeredRules),
+    ...formatRedFlags(llmRules).filter((rule) => rule !== "fallback_error"),
+  ]);
+  const redFlags =
+    finalUrgency === "emergency" && formattedRedFlags.length === 0
+      ? deriveEmergencyRedFlags(`${symptoms}\n${response.reasoning}`)
+      : formattedRedFlags;
 
   return {
     urgency: urgencyLabels[finalUrgency] || "Monitor",
@@ -78,7 +135,7 @@ export function formatTriageResponse(response, symptoms) {
     confidenceLabel: confidenceLabels[confidence] || "Unknown",
     symptoms,
     reasoning: response.reasoning,
-    redFlags: formatRedFlags(triggeredRules),
+    redFlags,
     recommendedAction:
       recommendedActions[finalUrgency] || recommendedActions.monitor_at_home,
     clarifyingQuestion: moduleResult?.clarifying_question,
@@ -87,8 +144,8 @@ export function formatTriageResponse(response, symptoms) {
       decisionSourceLabels[response.decision_source] || response.decision_source,
     isFallback,
     statusMessage: isFallback
-      ? "Backend connected, but the LLM returned the fallback response. Check OPENAI_API_KEY on the backend."
-      : "Backend LLM response received.",
+      ? "PetTriage needs a little more information before it can provide a confident recommendation."
+      : "PetTriage response received.",
     timestamp: "Just now",
   };
 }
@@ -109,7 +166,7 @@ export async function submitTriage({ profile, symptoms }) {
     });
   } catch {
     throw new Error(
-      "Could not reach the triage API. Make sure the backend is running on http://127.0.0.1:8000.",
+      "PetTriage is unavailable right now. Please try again in a moment.",
     );
   }
 

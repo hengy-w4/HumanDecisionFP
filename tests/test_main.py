@@ -80,7 +80,9 @@ def test_llm_emergency_escalates_when_rule_engine_does_not(mock_llm):
     assert response.decision_source == "llm"
     assert response.rule_result is not None
     assert response.rule_result.urgency == "monitor_at_home"
-    assert response.llm_result == mock_llm.return_value
+    assert response.llm_result is not None
+    assert response.llm_result.urgency == "emergency"
+    assert response.llm_result.triggered_rules
 
 
 @patch("src.main.run_llm_triage")

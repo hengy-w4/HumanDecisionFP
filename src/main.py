@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.llm_triage import run_llm_triage
 from src.rule_engine import run_rule_engine
 from src.schemas import (
+    ModuleResult,
     PetProfile,
     PetProfileRecord,
     PetProfileUpdate,
@@ -45,6 +46,46 @@ def _model_data(model):
     return model.dict()
 
 
+_EMERGENCY_RED_FLAG_KEYWORDS = [
+    ("difficulty breathing", ["difficulty breathing", "trouble breathing", "can't breathe", "cannot breathe", "breathing"]),
+    ("collapse or weakness", ["collapse", "collapsed", "weakness", "weak", "unable to stand"]),
+    ("seizure", ["seizure", "seizing"]),
+    ("severe pain", ["severe pain", "extreme pain", "pain"]),
+    ("poison or toxin exposure", ["poison", "toxin", "toxic", "ingestion", "ate unknown"]),
+    ("severe bleeding", ["bleeding", "blood loss"]),
+    ("pale or blue gums", ["blue gums", "pale gums", "gum color"]),
+    ("blocked urination", ["straining to urinate", "unable to urinate", "urine", "urinating"]),
+]
+
+
+def _derive_emergency_red_flags(text: str) -> list[str]:
+    lower_text = text.lower()
+    flags = [
+        label
+        for label, keywords in _EMERGENCY_RED_FLAG_KEYWORDS
+        if any(keyword in lower_text for keyword in keywords)
+    ]
+    return flags or ["Emergency-level symptoms described in the triage assessment"]
+
+
+def _ensure_emergency_red_flags(result: ModuleResult, symptom_text: str) -> ModuleResult:
+    if result.urgency != "emergency" or result.triggered_rules:
+        return result
+
+    derived_flags = _derive_emergency_red_flags(
+        f"{symptom_text}\n{result.reasoning}"
+    )
+
+    return ModuleResult(
+        urgency=result.urgency,
+        source=result.source,
+        reasoning=result.reasoning,
+        confidence=result.confidence,
+        clarifying_question=result.clarifying_question,
+        triggered_rules=derived_flags,
+    )
+
+
 @app.post("/triage", response_model=TriageResponse)
 def triage(request: TriageRequest):
     rule_result = run_rule_engine(request.pet_profile, request.symptom_text)
@@ -58,7 +99,10 @@ def triage(request: TriageRequest):
             llm_result=None,
         )
 
-    llm_result = run_llm_triage(request.pet_profile, request.symptom_text)
+    llm_result = _ensure_emergency_red_flags(
+        run_llm_triage(request.pet_profile, request.symptom_text),
+        request.symptom_text,
+    )
 
     if llm_result.urgency == "emergency":
         return TriageResponse(
