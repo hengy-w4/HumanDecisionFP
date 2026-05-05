@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function LoginForm({ mode, onLogin }) {
+export default function LoginForm({ mode, onForgotPassword, onLogin }) {
   const isSignup = mode === "signup";
   const [formData, setFormData] = useState({
     name: "",
@@ -87,8 +87,12 @@ export default function LoginForm({ mode, onLogin }) {
           Keep me signed in
         </label>
         {!isSignup ? (
-          <button className="text-link-button" type="button">
-          Forgot password?
+          <button
+            className="text-link-button"
+            type="button"
+            onClick={onForgotPassword}
+          >
+            Forgot password?
           </button>
         ) : null}
       </div>
