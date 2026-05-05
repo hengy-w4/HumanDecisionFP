@@ -1,44 +1,70 @@
-# PetTriage API
+# PetTriage
 
-PetTriage is a small FastAPI service for pet symptom triage. It combines a deterministic rule engine with an LLM-style triage module and returns a final urgency recommendation for a pet based on profile information and a free-text symptom description.
+PetTriage is a full-stack pet symptom triage prototype. It combines a React/Vite frontend with a FastAPI backend, deterministic emergency red-flag rules, and an OpenAI-powered LLM triage module.
 
-Current urgency levels are:
+The app lets a pet owner:
 
-- `monitor_at_home`
-- `office_appointment`
-- `emergency`
+- Sign in to a session
+- Review a pet profile
+- Chat with the PetTriage Assistant about symptoms
+- Receive an urgency recommendation
+- Review a final triage report
+- Submit local vet outcome feedback
 
-The current implementation includes placeholder logic for both the rule engine and LLM module, making it a starting point for building a fuller veterinary triage workflow.
+PetTriage is not a diagnosis and is not a substitute for veterinary care.
+
+## Tech Stack
+
+- Frontend: React, Vite, CSS
+- Backend: FastAPI, Pydantic, Uvicorn
+- LLM: OpenAI Python SDK
+- Tests: pytest
 
 ## Project Structure
 
 ```text
 .
-├── pettriage/
-│   ├── main.py          # FastAPI app and /triage endpoint
-│   ├── rule_engine.py   # Deterministic red-flag/rule-based triage logic
-│   ├── llm_triage.py    # LLM triage integration placeholder
-│   └── scehmas.py       # Pydantic request/response models
+├── data/
+│   ├── red_flags.json
+│   └── eval_dataset.json
+├── frontend/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── data/
+│   │   ├── pages/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── package.json
+│   └── vite.config.js
+├── src/
+│   ├── config.py
+│   ├── llm_triage.py
+│   ├── main.py
+│   ├── prompt_templates.py
+│   ├── rule_engine.py
+│   └── schemas.py
+├── tests/
 ├── requirements.txt
-├── .gitignore
 └── README.md
 ```
 
-Note: `pettriage/main.py` imports `pettriage.schemas`, but the model file is currently named `scehmas.py`. Rename `pettriage/scehmas.py` to `pettriage/schemas.py` before running the API.
+## Urgency Levels
 
-## Requirements
+The backend uses these canonical urgency values:
 
-- Python 3.10+
-- FastAPI
-- Uvicorn
-- Pydantic
-- pytest
-- python-dotenv
-- openai
+- `monitor_at_home`
+- `office_appointment`
+- `emergency`
 
-Install dependencies from `requirements.txt`.
+The frontend displays them as:
+
+- `Monitor`
+- `Urgent`
+- `Emergency`
 
 ## Setup
+
+### Backend
 
 ```bash
 python -m venv .venv
@@ -46,39 +72,71 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-If you plan to replace the mock LLM triage logic with the OpenAI API, create a `.env` file and add your API key:
+Create a local `.env` file:
 
 ```bash
-OPENAI_API_KEY=your_api_key_here
+OPENAI_API_KEY=your_key_here
+OPENAI_MODEL=gpt-4o-mini
 ```
 
-## Run the API
+Do not commit `.env` or paste API keys into chat/logs.
 
-After renaming `scehmas.py` to `schemas.py`, start the development server:
+Run the backend:
 
 ```bash
-uvicorn pettriage.main:app --reload
+uvicorn src.main:app --host 127.0.0.1 --port 8000
 ```
 
-The API will be available at:
-
-```text
-http://127.0.0.1:8000
-```
-
-Interactive API documentation is available at:
+API docs:
 
 ```text
 http://127.0.0.1:8000/docs
 ```
 
-## Endpoint
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev -- --host 127.0.0.1
+```
+
+Open:
+
+```text
+http://127.0.0.1:5173/
+```
+
+The frontend expects the backend at:
+
+```text
+http://127.0.0.1:8000
+```
+
+You can override this with:
+
+```bash
+VITE_API_BASE_URL=http://127.0.0.1:8000
+```
+
+## Main App Flow
+
+1. Log in from the session login page.
+2. Use the Home dashboard to open the chatbot or profile.
+3. Chat with PetTriage Assistant about symptoms.
+4. The frontend sends the conversation context to `POST /triage`.
+5. The backend runs emergency rules first, then the LLM if no rule emergency is triggered.
+6. The chatbot displays assistant messages and a final urgency result.
+7. The final report shows urgency, clinical reasoning, red flags, chat history, pet context, and next steps.
+8. The feedback form collects vet outcome details locally in the frontend.
+
+## Backend Endpoints
 
 ### `POST /triage`
 
-Accepts a pet profile and symptom description, runs both triage modules, and returns the final urgency decision.
+Runs rule-based and LLM-based triage.
 
-Example request:
+Example:
 
 ```bash
 curl -X POST "http://127.0.0.1:8000/triage" \
@@ -86,13 +144,14 @@ curl -X POST "http://127.0.0.1:8000/triage" \
   -d '{
     "pet_profile": {
       "species": "dog",
-      "breed": "Labrador Retriever",
-      "age": 6,
-      "sex": "female",
-      "weight": 28.5,
-      "known_conditions": ["arthritis"]
+      "pet_name": "Mochi",
+      "breed": "Corgi mix",
+      "age": 5,
+      "sex": "Female",
+      "weight": 24,
+      "known_conditions": ["Sensitive stomach"]
     },
-    "symptom_text": "She has been vomiting since this morning and seems tired."
+    "symptom_text": "Mochi has vomited twice today and seems tired."
   }'
 ```
 
@@ -102,7 +161,7 @@ Example response:
 {
   "final_urgency": "office_appointment",
   "decision_source": "llm",
-  "reasoning": "Mock LLM result. Replace with structured LLM triage logic.",
+  "reasoning": "The symptoms warrant veterinary evaluation...",
   "rule_result": {
     "urgency": "monitor_at_home",
     "source": "rule_engine",
@@ -114,82 +173,98 @@ Example response:
   "llm_result": {
     "urgency": "office_appointment",
     "source": "llm",
-    "reasoning": "Mock LLM result. Replace with structured LLM triage logic.",
+    "reasoning": "The symptoms warrant veterinary evaluation...",
     "confidence": "medium",
-    "clarifying_question": null,
+    "clarifying_question": "Has Mochi had diarrhea or signs of pain?",
     "triggered_rules": []
   }
 }
 ```
 
-## Decision Flow
+### `POST /profiles`
 
-The endpoint uses this decision order:
+Creates an in-memory pet profile.
 
-1. Run the rule engine.
-2. Run the LLM triage module.
-3. If the rule engine returns `emergency`, use the rule engine decision.
-4. Otherwise, if the LLM module returns `emergency`, use the LLM decision.
-5. Otherwise, use the LLM module's urgency and reasoning.
+### `GET /profiles`
 
-This gives hard-coded safety rules priority over the LLM when an emergency rule is triggered.
+Lists in-memory pet profiles.
 
-## Data Models
+### `GET /profiles/{profile_id}`
 
-### `PetProfile`
+Gets one pet profile.
 
-```json
-{
-  "species": "string",
-  "breed": "string | null",
-  "age": "number | null",
-  "sex": "string | null",
-  "weight": "number | null",
-  "known_conditions": ["string"]
-}
+### `PUT /profiles/{profile_id}`
+
+Updates one pet profile.
+
+### `POST /overrides`
+
+Stores an in-memory owner override for a triage result.
+
+### `GET /overrides`
+
+Lists in-memory override records.
+
+### `POST /vet-feedback`
+
+Stores an in-memory vet feedback record. The current frontend feedback page is local-only, but the backend endpoint is available for future integration.
+
+### `GET /vet-feedback`
+
+Lists in-memory vet feedback records.
+
+## Triage Decision Flow
+
+1. Run the deterministic rule engine against `data/red_flags.json`.
+2. If a rule returns `emergency`, return that emergency result immediately.
+3. Otherwise, call the LLM triage module.
+4. If the LLM returns `emergency`, return the LLM emergency result.
+5. Otherwise, return the LLM urgency and reasoning.
+
+Emergency consistency is enforced:
+
+- Emergency rule results include triggered rules.
+- LLM emergency results are normalized to include at least one red flag.
+- The frontend never displays `Emergency` with `No red flags detected`.
+
+## Frontend Pages
+
+- `LoginPage`: session login/signup/reset UI
+- `HomePage`: dashboard, pet profile summary, interactive screening history
+- `PetProfilePage`: editable pet profile form
+- `SymptomChatPage`: conversational PetTriage Assistant
+- `TriageResultPage`: final urgency report with chat history and pet context
+- `VetFeedbackPage`: frontend-only vet outcome feedback form
+
+## Testing
+
+Run backend tests:
+
+```bash
+pytest
 ```
 
-### `TriageRequest`
+Build frontend:
 
-```json
-{
-  "pet_profile": "PetProfile",
-  "symptom_text": "string"
-}
+```bash
+cd frontend
+npm run build
 ```
 
-### `ModuleResult`
+Expected current status:
 
-```json
-{
-  "urgency": "monitor_at_home | office_appointment | emergency",
-  "source": "string",
-  "reasoning": "string",
-  "confidence": "low | medium | high",
-  "clarifying_question": "string | null",
-  "triggered_rules": ["string"]
-}
+```text
+105 passed
+vite build successful
 ```
 
-### `TriageResponse`
+## Notes
 
-```json
-{
-  "final_urgency": "monitor_at_home | office_appointment | emergency",
-  "decision_source": "string",
-  "reasoning": "string",
-  "rule_result": "ModuleResult | null",
-  "llm_result": "ModuleResult | null"
-}
-```
+- Backend records for profiles, overrides, and vet feedback are stored in memory and reset when the server restarts.
+- The frontend currently uses mock profile/history data for the UI experience.
+- The chatbot sends conversation context to the backend as free-text `symptom_text`.
+- OpenAI failures fall back to conservative office-appointment guidance.
 
-## Development Notes
+## Safety Disclaimer
 
-- `rule_engine.py` currently returns `monitor_at_home` unless expanded with red-flag rules.
-- `llm_triage.py` currently returns a mock `office_appointment` result.
-- Add tests under a `tests/` directory when expanding the decision logic.
-- Keep emergency criteria explicit and auditable in the rule engine.
-
-## Important Disclaimer
-
-This project is for software development and educational purposes. It is not a substitute for professional veterinary advice, diagnosis, or treatment. For urgent symptoms or suspected emergencies, contact a licensed veterinarian or emergency veterinary clinic.
+PetTriage is for educational and software development purposes. It provides urgency guidance only, not diagnosis or treatment. For severe symptoms, rapid worsening, suspected poisoning, breathing problems, collapse, seizures, uncontrolled bleeding, or any urgent concern, contact a licensed veterinarian or emergency veterinary clinic immediately.
