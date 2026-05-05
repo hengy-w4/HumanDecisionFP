@@ -1,10 +1,22 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from src.llm_triage import run_llm_triage
 from src.rule_engine import run_rule_engine
 from src.schemas import TriageRequest, TriageResponse
 
 app = FastAPI(title="PetTriage API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1:5173",
+        "http://localhost:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.post("/triage", response_model=TriageResponse)

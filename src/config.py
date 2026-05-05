@@ -14,7 +14,7 @@ def get_openai_api_key() -> str:
 
 
 def get_openai_model() -> str:
-    return os.getenv("OPENAI_MODEL", "gpt-4-turbo-preview")
+    return os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 
 
 def get_environment() -> str:
