@@ -4,7 +4,7 @@ import PetProfileSummaryCard from "./PetProfileSummaryCard.jsx";
 import ScreeningHistoryList from "./ScreeningHistoryList.jsx";
 import "./homePage.css";
 
-const navItems = ["Chatbot", "Profile", "Feedback"];
+const navItems = ["Chatbot", "Profile"];
 
 export default function HomePage({ onNavigateChat, onNavigateProfile }) {
   const handleNavClick = (item) => {
