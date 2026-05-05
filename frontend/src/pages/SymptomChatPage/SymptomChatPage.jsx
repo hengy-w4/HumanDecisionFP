@@ -33,7 +33,7 @@ export default function SymptomChatPage({
         symptoms: trimmedSymptoms,
       });
       setResult(nextResult);
-      onTriageComplete(nextResult);
+      onTriageComplete?.(nextResult);
     } catch (apiError) {
       setError(apiError.message);
     } finally {

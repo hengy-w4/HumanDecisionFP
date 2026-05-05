@@ -19,10 +19,34 @@ export default function ChatbotResponseArea({ result, onViewResult }) {
       <div className="chat-response__header">
         <div>
           <p className="eyebrow">Chatbot Response</p>
-          <h2 id="response-title">Triage summary</h2>
+          <h2 id="response-title">Backend LLM triage</h2>
         </div>
-        <span>{result.timestamp}</span>
+        <div className="response-meta">
+          <span>{result.timestamp}</span>
+          <strong>{result.decisionSourceLabel}</strong>
+        </div>
       </div>
+
+      <div className="chat-thread" aria-label="Chat transcript">
+        <article className="chat-message chat-message--owner">
+          <span>You</span>
+          <p>{result.symptoms}</p>
+        </article>
+        <article className="chat-message chat-message--assistant">
+          <span>PetTriage</span>
+          <p>{result.reasoning}</p>
+        </article>
+      </div>
+
+      <p
+        className={
+          result.isFallback
+            ? "api-status api-status--warning"
+            : "api-status api-status--success"
+        }
+      >
+        {result.statusMessage}
+      </p>
 
       <MiniUrgencyCard
         urgency={result.urgency}
@@ -56,7 +80,10 @@ export default function ChatbotResponseArea({ result, onViewResult }) {
 
         <section>
           <h3>Clarifying question</h3>
-          <p>{result.clarifyingQuestion}</p>
+          <p>
+            {result.clarifyingQuestion ||
+              "No clarifying question was returned for this case."}
+          </p>
         </section>
       </div>
 
